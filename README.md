@@ -1,24 +1,18 @@
 # MCP23S17 I/O Expander Driver for STM32
 
-A lightweight C driver for the **Microchip MCP23S17** 16-bit SPI I/O expander, designed for STM32 microcontrollers using the STM32 HAL SPI interface.
+A lightweight C driver for the Microchip MCP23S17 16-bit SPI I/O expander, built for STM32 using the HAL SPI interface. This is just the driver itself (`.c`/`.h`), meant to be dropped into an existing STM32 project rather than a full standalone example project. I'm using it in my own STM32F407 project alongside it.
 
-The driver provides a simple API for initializing the device, configuring GPIO directions, and reading or writing the I/O ports.
-
----
+The API is intentionally minimal: initialize the device, set GPIO direction on Port A/B, and read or write those ports.
 
 ## Features
 
 - STM32 HAL SPI interface
-- Supports MCP23S17 hardware addressing
-- Configure Port A and Port B directions
-- Read GPIO Port A and Port B
-- Write GPIO Port A and Port B
-- Supports multiple MCP23S17 devices on the same SPI bus using hardware addressing
-- Simple and lightweight implementation
+- Supports MCP23S17 hardware addressing, so multiple devices can share the same SPI bus
+- Configure direction for Port A and Port B independently
+- Read and write both GPIO ports
+- Small, dependency-free implementation
 
----
-
-## Repository Structure
+## Repo structure
 
 ```text
 .
@@ -27,19 +21,13 @@ The driver provides a simple API for initializing the device, configuring GPIO d
 └── README.md
 ```
 
----
+## Hardware used
 
-## Hardware Requirements
+STM32F407, MCP23S17, over SPI, built with STM32CubeIDE and STM32 HAL.
 
-- STM32 MCU
-- MCP23S17
-- SPI Interface
+## Quick start
 
----
-
-## Quick Start
-
-### Create Driver Instance
+Create the driver instance:
 
 ```c
 MCP23S17_t ioExpander =
@@ -51,58 +39,39 @@ MCP23S17_t ioExpander =
 };
 ```
 
-### Initialize
+Initialize it:
 
 ```c
 IOexpander_init(&ioExpander);
 ```
 
-### Configure GPIO Direction
+Set GPIO direction:
 
 ```c
-// Configure all pins on Port A as outputs
+// all pins on Port A as outputs
 set_IOexpander_direction(&ioExpander, PORT_A, 0x00);
 
-// Configure all pins on Port B as inputs
+// all pins on Port B as inputs
 set_IOexpander_direction(&ioExpander, PORT_B, 0xFF);
 ```
 
-### Write GPIO
+Write to a port:
 
 ```c
 write_IOexpander(&ioExpander, PORT_A, 0x55);
 ```
 
-### Read GPIO
+Read from a port:
 
 ```c
 uint8_t value = read_IOexpander(&ioExpander, PORT_B);
 ```
 
----
-
 ## API
 
 | Function | Description |
 |----------|-------------|
-| `IOexpander_init()` | Initialize the MCP23S17 |
-| `set_IOexpander_direction()` | Configure GPIO direction for Port A or Port B |
-| `write_IOexpander()` | Write data to a GPIO port |
-| `read_IOexpander()` | Read data from a GPIO port |
-
----
-
-## Tested Hardware
-
-| Component | Description |
-|-----------|-------------|
-| MCU | STM32F407 |
-| I/O Expander | MCP23S17 |
-| Framework | STM32 HAL |
-| IDE | STM32CubeIDE |
-
----
-
-## License
-
-This project is released under the MIT License.
+| `IOexpander_init()` | Initializes the MCP23S17 |
+| `set_IOexpander_direction()` | Sets GPIO direction for Port A or Port B |
+| `write_IOexpander()` | Writes data to a GPIO port |
+| `read_IOexpander()` | Reads data from a GPIO port |
