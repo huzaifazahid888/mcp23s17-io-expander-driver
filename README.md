@@ -35,7 +35,7 @@ MCP23S17_t ioExpander =
     .hspi = &hspi1,
     .CS_PORT_EXPANDER = GPIOA,
     .CS_PIN_EXPANDER = GPIO_PIN_4,
-    .hardware_address = 0
+    .hardware_address = 0b000 //A0 A1 A2
 };
 ```
 
