@@ -23,7 +23,7 @@ The API is intentionally minimal: initialize the device, set GPIO direction on P
 
 ## Hardware used
 
-STM32F407, MCP23S17, over SPI, built with STM32CubeIDE and STM32 HAL.
+STM32F407, MCP23S17
 
 ## Quick start
 
